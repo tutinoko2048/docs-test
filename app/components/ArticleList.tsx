@@ -1,5 +1,3 @@
-"use client";
-
 import { headers } from 'next/headers'
 import { SimpleGrid, Flex, VStack, Stack, Grid } from "./chakra-ui";
 import { ArticleData } from "../types";
