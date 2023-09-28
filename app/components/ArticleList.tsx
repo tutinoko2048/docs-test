@@ -1,5 +1,5 @@
 import { headers } from "next/headers"
-import { SimpleGrid, Flex, VStack, Stack, Grid } from "./chakra-ui";
+import { SimpleGrid } from "./chakra-ui";
 import { ArticleData } from "../types";
 import ArticleCard from "./ArticleCard";
 
@@ -10,7 +10,7 @@ export default async function ArticleList() {
   const baseUrl = `${protocol}://${host}`;
   
   const res = await fetch(`${baseUrl}/api/articles`, {
-    cache: "no-store"
+    next: { revalidate: 300 }
   });
   const articles: ArticleData[] = await res.json();
   

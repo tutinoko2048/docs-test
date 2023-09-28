@@ -29,6 +29,14 @@ const CodeBlockTitle: FC<WrapperProps> = ({ children }) => (
   </div>
 );
 
+// unselectable styles
+const lineNumberStyle: any = {
+  marginLeft: "-0.4em",
+  "-webkit-user-select": "none",
+  "-ms-user-select": "none",
+  "user-select": "none"
+};
+
 export default function CodeBlock(props: CodeProps) {
   const { inline, className, children } = { ...props };
 
@@ -43,7 +51,8 @@ export default function CodeBlock(props: CodeProps) {
     lang = match && match[1] ? match[1] : "";
   }
 
-  const showLineNumbers = String(children).split('\n').length - 2 ? true : false;
+  const highlightedCode = String(children).replace(/\n$/, "");
+  const showLineNumbers = highlightedCode.split('\n').length - 1 ? true : false;
   
   return (
     <CodeBlockWrapper>
@@ -52,9 +61,9 @@ export default function CodeBlock(props: CodeProps) {
         style={highlightStyle}
         language={lang} 
         showLineNumbers={showLineNumbers}
-        lineNumberStyle={{ marginLeft: "-0.4em" }}
+        lineNumberStyle={lineNumberStyle}
       >
-        {String(children).replace(/\n$/, "")}
+        {highlightedCode}
       </SyntaxHighlighter>
     </CodeBlockWrapper>
   );

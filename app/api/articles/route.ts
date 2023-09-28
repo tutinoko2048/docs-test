@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import fs from "node:fs";
 import path from "node:path";
 import { ArticleData } from "@/app/types";
-import { setTimeout } from "node:timers/promises";
 
 interface Params {
   slug: string;
@@ -25,6 +24,5 @@ export async function GET(request: Request) {
     .filter(dirent => dirent.isFile() && dirent.name.endsWith('.md'))
     .map(dirent => getArticleData(dirent));
 
-  await setTimeout(500);
   return NextResponse.json(articles);
 }
