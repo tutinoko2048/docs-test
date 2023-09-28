@@ -1,11 +1,12 @@
 "use client";
 
 import { FC, ReactNode } from "react";
-import { CodeComponent } from "react-markdown/lib/ast-to-react";
+import type { CodeProps } from "react-markdown/lib/ast-to-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { useColorModeValue } from "@chakra-ui/react";
+
 interface WrapperProps {
   children: ReactNode;
 }
@@ -28,8 +29,11 @@ const CodeBlockTitle: FC<WrapperProps> = ({ children }) => (
   </div>
 );
 
-const CodeBlock: CodeComponent = (props) => {
+export default function CodeBlock(props: CodeProps) {
   const { inline, className, children } = { ...props };
+
+  const highlightStyle = useColorModeValue(oneLight, nightOwl);
+
   if (inline) return <code className={className}>{children}</code>;
   let match = /language-(\w+)(:.+)/.exec(className || "");
   let lang = match && match[1] ? match[1] : "";
@@ -39,7 +43,6 @@ const CodeBlock: CodeComponent = (props) => {
     lang = match && match[1] ? match[1] : "";
   }
 
-  const highlightStyle = useColorModeValue(oneLight, nightOwl);
   const showLineNumbers = String(children).split('\n').length - 2 ? true : false;
   
   return (
@@ -57,4 +60,3 @@ const CodeBlock: CodeComponent = (props) => {
   );
 }
 
-export default CodeBlock;
