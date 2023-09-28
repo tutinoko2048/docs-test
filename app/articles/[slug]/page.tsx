@@ -4,6 +4,12 @@ import path from "path";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import CodeBlock from "./CodeBlock";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Article",
+  description: "Article."
+}
 
 interface MarkdownData {
   fullPath: string;
@@ -24,7 +30,7 @@ async function getData(articleId: string): Promise<MarkdownData> {
 
 export default async function Article({ params }: { params: { slug: string } }) {
   const markdown = await getData(params.slug);
-  //console.log(markdown.data)
+
   return (
     <ReactMarkdown
       remarkPlugins={[ remarkGfm ]}
