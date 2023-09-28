@@ -1,4 +1,4 @@
-import { Container } from "./components/chakra-ui";
+import { Container } from "./chakra-ui";
 
 export default function Main({ children }: { children: React.ReactNode }) {
   return (
