@@ -31,7 +31,7 @@ const CodeBlockTitle: FC<WrapperProps> = ({ children }) => (
 
 // unselectable styles
 const lineNumberStyle: React.CSSProperties = {
-  marginLeft: "-0.4em",
+  marginLeft: "-0.2em",
   WebkitUserSelect: "none",
   msUserSelect: "none",
   userSelect: "none"
