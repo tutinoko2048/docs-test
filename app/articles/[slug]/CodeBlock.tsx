@@ -1,18 +1,20 @@
 "use client";
 
-import { FC, ReactNode } from "react";
+import React, { FC, ReactNode } from "react";
 import type { CodeProps } from "react-markdown/lib/ast-to-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { useColorModeValue } from "@chakra-ui/react";
+import CopyButton from "./CopyButton";
 
 interface WrapperProps {
   children: ReactNode;
+  [prop: string]: any;
 }
 
-const CodeBlockWrapper: FC<WrapperProps> = ({ children }) => (
-  <div style={{ position: "relative"}}>{children}</div>
+const CodeBlockWrapper: FC<WrapperProps> = ({ children, ...props }) => (
+  <div style={{ position: "relative" }} {...props} >{children}</div>
 );
 
 const CodeBlockTitle: FC<WrapperProps> = ({ children }) => (
@@ -39,8 +41,8 @@ const lineNumberStyle: React.CSSProperties = {
 
 export default function CodeBlock(props: CodeProps) {
   const { inline, className, children } = { ...props };
-
   const highlightStyle = useColorModeValue(oneLight, nightOwl);
+  const [showCopyButton, setShowCopyButton] = React.useState(false);
 
   if (inline) return <code className={className}>{children}</code>;
   let match = /language-(\w+)(:.+)/.exec(className || "");
@@ -55,8 +57,12 @@ export default function CodeBlock(props: CodeProps) {
   const showLineNumbers = highlightedCode.split('\n').length - 1 ? true : false;
   
   return (
-    <CodeBlockWrapper>
+    <CodeBlockWrapper
+      onMouseEnter={() => setShowCopyButton(true)}
+      onMouseLeave={() => setShowCopyButton(false)}
+    >
       {name && <CodeBlockTitle>{name}</CodeBlockTitle>}
+      {showCopyButton && <CopyButton value={highlightedCode} />}
       <SyntaxHighlighter
         style={highlightStyle}
         language={lang} 

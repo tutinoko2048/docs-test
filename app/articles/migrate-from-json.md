@@ -43,6 +43,7 @@ description: "manifestも含めた基本的な作り方を解説します"
 
 ## コードを書く
 `@minecraft/server 1.5.0`以上で動きます
+
 ```js:scripts/index.js
 import { world } from "@minecraft/server"; 
 

@@ -17,7 +17,7 @@ const theme = extendTheme({
   styles: {
     global: (props: StyleFunctionProps) => ({
       body: {
-        bg: mode("brand.light", "brand.dark2")(props)
+        bg: mode("brand.light", "brand.dark2")(props),
       },
       ".markdown": {
         color: mode("gray.900", "gray.100")(props) // chakra-uiが提供するセットも使える
@@ -42,7 +42,8 @@ const theme = extendTheme({
         color: mode("blue.400", "#4ba7f4")(props)
       },
       ".markdown blockquote": {
-        color: mode("gray.600", "gray.300")(props)
+        color: mode("gray.600", "gray.300")(props),
+        border: mode("gray.200", "gray.200")(props)
       }
     }),
   },
