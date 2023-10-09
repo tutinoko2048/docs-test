@@ -2,17 +2,30 @@ import { headers } from "next/headers"
 import { SimpleGrid } from "./chakra-ui";
 import { ArticleData } from "../types";
 import ArticleCard from "./ArticleCard";
+import matter from "gray-matter";
+import fs from "node:fs";
+import path from "node:path";
 
-export default async function ArticleList() {
-  const headersData = headers();
-  const host = headersData.get('host');
-  const protocol = headersData.get('x-forwarded-proto') ?? host!.startsWith('localhost') ? 'http' : 'https';
-  const baseUrl = `${protocol}://${host}`;
-  
-  const res = await fetch(`${baseUrl}/api/articles`, {
-    next: { revalidate: 300 }
-  });
-  const articles: ArticleData[] = await res.json();
+function getArticleData(dirent: fs.Dirent): ArticleData {
+  const file = fs.readFileSync(path.join(dirent.path, dirent.name));
+  const { data } = matter(file);
+  return {
+    id: dirent.name.replaceAll('.md', ''),
+    title: data.title,
+    date: data.date,
+    description: data.description
+  }
+}
+
+function getArticleList(): ArticleData[] {
+  const articles = fs.readdirSync(path.join(process.cwd(), 'app/articles'), { withFileTypes: true })
+    .filter(dirent => dirent.isFile() && dirent.name.endsWith('.md'))
+    .map(dirent => getArticleData(dirent));
+  return articles;
+}
+
+export default function ArticleList() {  
+  const articles: ArticleData[] = getArticleList();
   
   return (
     <SimpleGrid columns={{ sm: 1, md: 2 }} spacing={2} as="ul">

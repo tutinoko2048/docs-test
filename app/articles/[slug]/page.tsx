@@ -17,7 +17,7 @@ interface MarkdownData {
   data: Record<string, any>
 }
 
-async function getData(articleId: string): Promise<MarkdownData> {
+function getData(articleId: string): MarkdownData {
   const fullPath = path.join(process.cwd(), 'app/articles', `${articleId}.md`);
   const file = readFileSync(fullPath, "utf-8");
   const matterResult = matter(file);
@@ -28,8 +28,8 @@ async function getData(articleId: string): Promise<MarkdownData> {
   }
 }
 
-export default async function Article({ params }: { params: { slug: string } }) {
-  const markdown = await getData(params.slug);
+export default function Article({ params }: { params: { slug: string } }) {
+  const markdown = getData(params.slug);
 
   return (
     <ReactMarkdown
