@@ -44,6 +44,9 @@ const theme = extendTheme({
       ".markdown blockquote": {
         color: mode("gray.600", "gray.300")(props),
         border: mode("gray.200", "gray.200")(props)
+      },
+      ".link": {
+        color: mode("blue.400", "#4ba7f4")(props)
       }
     }),
   },

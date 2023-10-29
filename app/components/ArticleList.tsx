@@ -5,7 +5,6 @@ import matter from "gray-matter";
 import fs from "node:fs";
 import path from "node:path";
 import dayjs from 'dayjs';
-import isSameOrAfterPlugin from 'dayjs/plugin/isSameOrAfter';
 
 function getArticleData(dirent: fs.Dirent): ArticleData {
   const file = fs.readFileSync(path.join(dirent.path, dirent.name));
