@@ -36,6 +36,7 @@ export default function Article({ params }: { params: { slug: string } }) {
       remarkPlugins={[ remarkGfm ]}
       className="markdown"
       components={{ code: CodeBlock }}
+      skipHtml
     >
       {markdown.content}
     </ReactMarkdown>
