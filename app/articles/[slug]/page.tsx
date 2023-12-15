@@ -7,9 +7,6 @@ import CodeBlock from "./CodeBlock";
 import { Divider, Link } from '@/app/components/chakra-ui';
 import { ArticleData } from '@/app/types';
 
-export const viewport = {
-  themeColor: 'black',
-}
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const { data } = getData(params.slug);
