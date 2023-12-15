@@ -4,18 +4,25 @@ import path from "path";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import CodeBlock from "./CodeBlock";
-import { Metadata } from "next";
 import { Divider, Link } from '@/app/components/chakra-ui';
+import { ArticleData } from '@/app/types';
 
-export const metadata: Metadata = {
-  title: "Article",
-  description: "Article."
+export const viewport = {
+  themeColor: 'black',
 }
-  
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const { data } = getData(params.slug);
+  return {
+    title: data.title,
+    description: data.description
+  }
+}
+
 interface MarkdownData {
   fullPath: string;
   content: string;
-  data: Record<string, any>
+  data: ArticleData;
 }
 
 function getData(articleId: string): MarkdownData {
@@ -25,7 +32,7 @@ function getData(articleId: string): MarkdownData {
   return {
     fullPath,
     content: matterResult.content,
-    data: matterResult.data
+    data: matterResult.data as ArticleData
   }
 }
 
